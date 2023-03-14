@@ -33,4 +33,9 @@ class car extends Model
     {
         return $this->belongsTo(client::class);
     }
+
+    public function person(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(person::class, 'client_id', 'id','person');
+    }
 }

@@ -1,16 +1,21 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarsController;
+use App\Http\Controllers\WorkersController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\RepairsController;
-use App\Http\Controllers\WorkersController;
+use App\Http\Controllers\SpecializationsController;
 use App\Http\Controllers\MalfunctionsController;
 use App\Http\Controllers\BrandsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+//Главная страница
+Route::get('/', [HomeController::class, 'index']);
+
+//О разработчике
+Route::get('/about', [HomeController::class, 'about']);
 
 #region Таблицы
 
@@ -26,26 +31,40 @@ Route::get('/cars/all', [CarsController::class, 'cars']);
 //Таблица ремонты
 Route::get('/repairs/all', [RepairsController::class, 'repairs']);
 
+//Архив
+Route::get('/repairs/archive-all', [RepairsController::class, 'archive']);
+
+//Таблица неисправности
+Route::get('/malfunctions/all', [MalfunctionsController::class, 'malfunctions']);
+
+#region Запросы
+
 //Запрос 1
-Route::get('/cars/owner-by-state-number/{id_car}', [CarsController::class, 'query01']);
+Route::post('/clients/select-client-by-state-number', [ClientsController::class, 'selectClientByStateNumber']);
 
 //Запрос 2
-Route::get('/clients/select-car-by-owner/{id_owner}', [ClientsController::class, 'query02']);
+Route::post('/cars/select-car-by-owner', [CarsController::class, 'carsSelectByOwner']);
 
 //Запрос 3
-Route::get('/clients/select-malfunctions-by-owner/{id_owner}', [ClientsController::class, 'query03']);
+Route::post('/malfunctions/select-malfunctions-by-owner', [MalfunctionsController::class, 'malfunctionsSelectByOwner']);
 
 //Запрос 4
-Route::get('/clients/select-worker-by-malfunction-client/{id_client}/{id_malfunction}', [ClientsController::class, 'query04']);
+Route::post('/workers/select-worker-by-malfunction-and-owner', [WorkersController::class, 'workerSelectByMalfunctionsAndOwner']);
 
 //Запрос 5
-Route::get('/malfunctions/select-clients-by-malfunctions/{id_malfunction}', [MalfunctionsController::class, 'query05']);
+Route::post('/clients/select-client-by-malfunction', [ClientsController::class, 'selectClientByMalfunction']);
 
-//Запрос 6 //car-brand/select-malfunction-by-car-brand/1
+//Запрос 6
 Route::get('/car-brand/select-malfunction-by-car-brand/{id_car_brand}', [BrandsController::class, 'query06']);
 
 //Запрос 7
-Route::get('/workers/select-count-by-specialization', [WorkersController::class, 'query07']);
+Route::get('/specializations/select-count-by-specialization', [SpecializationsController::class, 'specializations']);
 
 //Запрос 8
 Route::get('/cars/count-cars-at-the-moment', [CarsController::class, 'query08']);
+
+//Запрос 9
+Route::get('/workers/select-count-free-workers', [SpecializationsController::class, 'query09']);
+
+//Запрос 10
+Route::post('/home/show-report', [HomeController::class, 'showReport']);

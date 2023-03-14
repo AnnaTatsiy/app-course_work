@@ -3,34 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\car;
-use App\Models\repair;
-use DateTime;
+use App\Models\client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
+use Illuminate\View\View;
 
 class CarsController extends Controller
 {
     // получить все записи
-    public function cars(): JsonResponse {
-        return response()->json(car::with('_brand','color','client')->paginate());
+    public function cars(): View  {
+        $cars = car::with('brand','color','client')->get();
+        $owners = Client::with('person')->get();
+        return view('cars.index', ['cars' => $cars, 'owners' => $owners, 'selectOwner' => 1]);
     }
 
-    // Запрос 1
-    //Фамилия, имя, отчество и адрес владельца автомобиля с данным номером государственной регистрации
-    public function query01($id_car) : JsonResponse{
-        return response()->json(car::with('client')->where('id','=',$id_car)->paginate());
+    //Запрос 2
+    //Марка и год выпуска автомобиля данного владельца
+    public function carsSelectByOwner(Request $request) :View {
+
+        $selectOwner = $request->input('owner');
+
+        $result = car::with('brand','color','client')
+            ->where('client_id', '=', $selectOwner)
+            ->get();
+
+        $owners = Client::with('person')->get();
+        return view('cars.index', ['cars' => $result, 'owners' => $owners, 'selectOwner' => $selectOwner ]);
     }
 
-    //Запрос 8
-    //Необходимо предусмотреть возможность выдачи справки о количестве автомобилей в ремонте на текущий момент
-    public function query08() : JsonResponse{
-        return response()->json(repair::with('car')
-            ->where('is_fixed','=',false)
-            ->where('date_of_correction','>', new DateTime())
-            ->distinct()
-            ->count());
-    }
 
-    //Query8() => Db.Repairs.Where(r => r.IsFixed == false).Select(r=>r.Car.Id).Distinct().Count();
+
 }
