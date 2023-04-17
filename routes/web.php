@@ -55,7 +55,7 @@ Route::post('/workers/select-worker-by-malfunction-and-owner', [WorkersControlle
 Route::post('/clients/select-client-by-malfunction', [ClientsController::class, 'selectClientByMalfunction']);
 
 //Запрос 6
-Route::get('/car-brand/select-malfunction-by-car-brand/{id_car_brand}', [BrandsController::class, 'query06']);
+Route::post('/malfunctions/select-malfunctions-by-brand', [MalfunctionsController::class, 'commonMalfunctionByBrandId']);
 
 //Запрос 7
 Route::get('/specializations/select-count-by-specialization', [SpecializationsController::class, 'specializations']);
@@ -68,3 +68,54 @@ Route::get('/workers/select-count-free-workers', [SpecializationsController::cla
 
 //Запрос 10
 Route::post('/home/show-report', [HomeController::class, 'showReport']);
+
+
+// добавляет клиента в таблицу, используйте форму с валидацией
+Route::get('/client/create', [ ClientsController::class, 'createForm' ]);
+Route::post('/client/add', [ ClientsController::class, 'add' ]);
+
+//редактирует клиента
+Route::get('/client/edit-form/{id}', [ ClientsController::class, 'editForm' ]);
+Route::post('/client/edit', [ ClientsController::class, 'edit' ]);
+
+
+// добавляет рабочего в таблицу, используйте форму с валидацией
+Route::get('/worker/create', [ WorkersController::class, 'createForm' ]);
+Route::post('/worker/add', [ WorkersController::class, 'add' ]);
+
+//редактирует рабочего
+Route::get('/worker/edit-form/{id}', [ WorkersController::class, 'editForm' ]);
+Route::post('/worker/edit', [ WorkersController::class, 'edit' ]);
+
+//"мягкое" удаление рабочего
+Route::get('/worker/delete/{id}', [ WorkersController::class, 'delete' ]);
+
+
+// добавляет авто в таблицу, используйте форму с валидацией
+Route::get('/car/create', [ CarsController::class, 'createForm' ]);
+Route::post('/car/add', [ CarsController::class, 'add' ]);
+
+//редактирует авто
+Route::get('/car/edit-form/{id}', [ CarsController::class, 'editForm' ]);
+Route::post('/car/edit', [ CarsController::class, 'edit' ]);
+
+
+// добавляет ремонт в таблицу, используйте форму с валидацией
+Route::get('/repair/create', [ RepairsController::class, 'createForm' ]);
+Route::post('/repair/add', [ RepairsController::class, 'add' ]);
+
+//редактирует ремонт
+Route::get('/repair/edit-form/{id}', [ RepairsController::class, 'editForm' ]);
+Route::post('/repair/edit', [ RepairsController::class, 'edit' ]);
+
+//"мягкое" удаление ремонта
+Route::get('/repair/delete/{id}', [ RepairsController::class, 'delete' ]);
+
+//генерация расписки
+Route::get('/repair/generate-receipt/{id}', [ RepairsController::class, 'generateReceipt' ]);
+
+//генерация счета
+Route::get('/repair/generate-account/{id}', [ RepairsController::class, 'generateAccount' ]);
+
+Route::get('/report-about-repairs', [HomeController::class, 'showParamForReportRepairs']);
+Route::post('/home/report-about-repairs', [HomeController::class, 'showReportAboutRepairs']);

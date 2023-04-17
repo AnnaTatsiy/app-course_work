@@ -32,7 +32,6 @@ return new class extends Migration
             $table->foreign('spare_part_id')->references('id')->on('spare_parts');
 
             $table->timestamps();
-            $table->softDeletes();                          // добавляет солбец deleted_at для "мягкого удаления"
 
         });
     }

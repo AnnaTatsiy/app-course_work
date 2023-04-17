@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class repair extends Model
 {
     use HasFactory;
-
-    // трейт для "мягкого" удаления
-    use SoftDeletes;
 
     // поля таблицы для отображения на свойства модели
     protected $fillable = [
@@ -40,6 +36,11 @@ class repair extends Model
 
     public function client(){
         return $this->belongsTo(client::class);
+    }
+
+    public function person(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(person::class, 'client_id', 'id','person');
     }
 
     public function spare_part(){

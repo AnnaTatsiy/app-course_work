@@ -65,12 +65,18 @@
 
     </div>
 
+        <div class="d-flex justify-content-end">
+            <div class="btn-group">
+                <a class="btn btn-success" href="/client/create">Добавить запись</a>
+            </div>
+        </div>
+
     @if(count($clients) == 0)
         <div class="mt-5 alert alert-danger">
             По вашему запросу ничего не найдено
         </div>
     @else
-<p class="fs-5 mt-3">Клиенты станции:</p>
+<p class="fs-5">Клиенты станции:</p>
 
 <table class="table mt-4">
     <thead>
@@ -92,7 +98,7 @@
             <td>{{$client->registration}}</td>
             <td>{{date("d.m.Y", strtotime($client->date_of_birth))}}</td>
             <td class='text-center'>
-                <a class="btn btn-success" title="Изменить" href="/shoes/edit-form/{{$client->id}}"><i class="bi bi-pencil-fill"></i></a>
+                <a class="btn btn-success" title="Изменить" href="/client/edit-form/{{$client->id}}"><i class="bi bi-pencil-fill"></i></a>
             </td>
         </tr>
     @endforeach

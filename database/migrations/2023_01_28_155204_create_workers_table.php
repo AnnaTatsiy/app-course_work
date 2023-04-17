@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreign('specialization_id')->references('id')->on('specializations');
 
             $table->timestamps();
+            $table->softDeletes();                          // добавляет солбец deleted_at для "мягкого удаления"
+
         });
     }
 

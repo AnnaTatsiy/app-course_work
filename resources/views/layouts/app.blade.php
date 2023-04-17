@@ -53,6 +53,10 @@
                         </li>
 
                         <li class="nav-item pt-1">
+                            <a class="nav-link @yield('reportRepairsActive')" href="/report-about-repairs">Отчет о ремонтах</a>
+                        </li>
+
+                        <li class="nav-item pt-1">
                             <a class="nav-link @yield('about')" href="/about">О разработчике</a>
                         </li>
 

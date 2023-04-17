@@ -52,6 +52,12 @@
 
     </div>
 
+    <div class="d-flex justify-content-end">
+        <div class="btn-group">
+            <a class="btn btn-success" href="/worker/create">Добавить запись</a>
+        </div>
+    </div>
+
     @if(count($workers) == 0)
         <div class="mt-5 alert alert-danger">
             По вашему запросу ничего не найдено
@@ -80,7 +86,8 @@
                 <td>{{$worker->workers_category}}</td>
                 <td>{{$worker->experience}}</td>
                 <td class='text-center'>
-                    <a class='btn btn-danger' title='Удалить' href="/shoes/delete/{{$worker->id}}"><i class='bi bi-trash-fill'></i></a>
+                    <a class="btn btn-success" title="Изменить" href="/worker/edit-form/{{$worker->id}}"><i class="bi bi-pencil-fill"></i></a>
+                    <a class='btn btn-danger' title='Удалить' href="/worker/delete/{{$worker->id}}"><i class='bi bi-trash-fill'></i></a>
                 </td>
             </tr>
         @endforeach

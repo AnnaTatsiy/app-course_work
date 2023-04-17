@@ -63,3 +63,13 @@ p{font-size: 13pt;}
     font-weight: 500; font-size: 14pt;
 }
 
+.opacity-zero{
+    opacity: 0;
+}
+
+.opacity-one{
+    opacity: 1;
+}
+
+
+

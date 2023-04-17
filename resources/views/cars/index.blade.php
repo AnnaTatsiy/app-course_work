@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('$carsActive', 'active')
+@section('carsActive', 'active')
 @section('title', 'Авто станции:')
 
 <!-- секция контент -->
@@ -39,6 +39,12 @@
 
     </div>
 
+    <div class="d-flex justify-content-end">
+        <div class="btn-group">
+            <a class="btn btn-success" href="/car/create">Добавить запись</a>
+        </div>
+    </div>
+
     @if(count($cars) == 0)
         <div class="mt-5 alert alert-danger">
             По вашему запросу ничего не найдено
@@ -64,11 +70,11 @@
                 <td>{{$car->id}}</td>
                 <td>{{$car->brand->name_brand}} </td>
                 <td>{{$car->color->name_color}}</td>
-                <td>{{date("d.m.Y", strtotime($car->year_of_release))}}</td>
+                <td>{{$car->year_of_release}}</td>
                 <td>{{$car->state_number}}</td>
                 <td>{{$car->client->passport}}</td>
                 <td class='text-center'>
-                    <a class="btn btn-success" title="Изменить" href="/shoes/edit-form/{{$car->id}}"><i
+                    <a class="btn btn-success" title="Изменить" href="/car/edit-form/{{$car->id}}"><i
                             class="bi bi-pencil-fill"></i></a>
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 
 @extends('layouts.app')
 
-@section('specializationsActive', 'active')
+@section('specialtiesActive', 'active')
 @section('title', 'Список специальностей рабочих:')
 
 <!-- секция контент -->

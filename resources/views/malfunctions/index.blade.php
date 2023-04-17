@@ -32,19 +32,44 @@
 
         </form>
 
-            <div class="row-3 mt-2 mb-5">
-                <a href="/malfunctions/all" class="btn btn-warning">Сброс</a>
+        <form class="row" method="post" action="/malfunctions/select-malfunctions-by-brand">
+            @csrf
+
+            <p class="mt-2 mb-3 fs-5">Самая распространенная неисправность в автомобилях указанной марки:</p>
+
+            <div class="col-4">
+                <label for="brand" class="form-label">Марка авто:</label>
+                <input class="form-control" list="datalistBrands" id="brand" name="brand" value="{{$selectBrand}}">
+                <datalist id="datalistBrands">
+                    @foreach($brands as $brand)
+                        <option
+                            value="{{$brand->id}}">{{$brand->name_brand}}
+                        </option>
+                    @endforeach
+                </datalist>
+
             </div>
 
+            <div class="col-1 mt-4">
+                <input class="btn btn-success" style="margin-top: 12px" type="submit" value="Выбрать"/>
+            </div>
+
+        </form>
+
+        <div class="row-3 mt-2 mb-5">
+            <a href="/malfunctions/all" class="btn btn-warning">Сброс</a>
         </div>
 
-        @if(count($malfunctions) == 0)
-            <div class="mt-5 alert alert-danger">
-                По вашему запросу ничего не найдено
-            </div>
-        @else
-            <p class="fs-5 mt-3">Неисправности:</p>
+    </div>
 
+    @if(count($malfunctions) == 0)
+        <div class="mt-5 alert alert-danger">
+            По вашему запросу ничего не найдено
+        </div>
+    @else
+        <p class="fs-5 mt-3">Неисправности:</p>
+
+        @if($is_malfunctions)
             <table class="table mt-4">
                 <thead>
                 <tr>
@@ -64,6 +89,28 @@
                 @endforeach
                 </tbody>
             </table>
+
+            @else
+
+            <table class="table mt-4">
+                <thead>
+                <tr>
+                    <th>Описание</th>
+                    <th>Количество неисправностей</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach($malfunctions as $malfunction)
+                    <tr>
+                        <td>{{$malfunction->name_malfunction}}</td>
+                        <td>{{$malfunction->count_malfunctions}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+
+        @endif
     @endif
 @endsection
 

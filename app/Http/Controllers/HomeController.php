@@ -38,6 +38,15 @@ class HomeController extends Controller
         return view('home.about');
     }
 
+    public function showParamForReportRepairs() : View{
+
+        $selectMonth = date("m");
+        $report = DB::select("call month_report_about_repairs($selectMonth);");
+
+        return view('home.report-about-repairs',
+            ['selectMonth' => $selectMonth,  'months' => Utils::$months ,'report' => $report]);
+    }
+
     // Запрос 10
     // Требуется также выдача месячного отчета о работе станции
     // техобслуживания. В отчет должны войти данные о количестве
@@ -49,6 +58,18 @@ class HomeController extends Controller
         $report = DB::select("call month_report_about_profit($selectMonth);");
 
         return view('home.report',
+            ['selectMonth' => $selectMonth,  'months' => Utils::$months ,'report' => $report]);
+    }
+
+    //а также перечень отремонтированных за прошедший месяц и находящихся в ремонте автомобилей,
+    // время ремонта каждого автомобиля, список его неисправностей, сведения о работниках, осуществлявших ремонт.
+    public function showReportAboutRepairs(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $selectMonth = $request->input('month');
+
+        $report = DB::select("call month_report_about_repairs($selectMonth);");
+
+        return view('home.report-about-repairs',
             ['selectMonth' => $selectMonth,  'months' => Utils::$months ,'report' => $report]);
     }
 
